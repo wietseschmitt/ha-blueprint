@@ -1,6 +1,7 @@
 blueprint:
-  name: Turn off charging after device is charged
-  description: Turn off the smart plug/relay after the device is charged to a given percent.
+  name: Stop/start charging based on battery level when home.
+  description: Turn off the smart plug/relay after the device is charged to a given
+    percent. Turn it back on when the device is discharged.
   domain: automation
   input:
     switch:
@@ -9,7 +10,6 @@ blueprint:
       selector:
         entity:
           domain: light
-
     phone_battery:
       name: Phone Battery
       description: Battery level sensor
@@ -17,30 +17,49 @@ blueprint:
         entity:
           domain: sensor
           device_class: battery
-
     charged_percent:
-      name: Charge percent
-      description: Charge device to this percent
+      name: Charged percent
+      description: When charged up to this percent, turn off the plug/relay
       selector:
         number:
-          min: 0
-          max: 100
-          unit_of_measurement: "%"
-          mode: "box"
+          min: 1.0
+          max: 100.0
+          unit_of_measurement: '%'
+          mode: slider
+          step: 1.0
       default: 100
-
+    discharged_percent:
+      name: Discharged percent
+      description: When discharged down to this percent turn on the plug/relay
+      selector:
+        number:
+          min: 0.0
+          max: 99.0
+          unit_of_measurement: '%'
+          mode: slider
+          step: 1.0
+      default: 20
 variables:
-  phone_battery: !input phone_battery
-  charged_percent: !input charged_percent
-
+  phone_battery: !input 'phone_battery'
+  charged_percent: !input 'charged_percent'
+  discharged_percent: !input 'discharged_percent'
 trigger:
-  - platform: state
-    entity_id: !input phone_battery
-
-condition:
-  condition: template
-  value_template: "{{ (states(phone_battery)|int) >= (charged_percent|int) }}"
-
+- platform: state
+  entity_id: !input 'phone_battery'
 action:
-  - service: switch.turn_off
-    entity_id: !input switch
+- choose:
+  - conditions:
+    - condition: template
+      value_template: '{{ (states(phone_battery)|int) >= (charged_percent|int) }}'
+    sequence:
+    - service: switch.turn_off
+      data: {}
+      entity_id: !input 'switch'
+  - conditions:
+    - condition: template
+      value_template: '{{ (states(phone_battery)|int) <= (discharged_percent|int) }}'
+    sequence:
+    - service: switch.turn_on
+      data: {}
+      entity_id: !input 'switch'
+  default: []
