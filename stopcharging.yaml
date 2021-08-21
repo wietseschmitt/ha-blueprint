@@ -52,14 +52,14 @@ action:
     - condition: template
       value_template: '{{ (states(phone_battery)|int) >= (charged_percent|int) }}'
     sequence:
-    - service: switch.turn_off
+    - service: light.turn_off
       data: {}
       entity_id: !input 'switch'
   - conditions:
     - condition: template
       value_template: '{{ (states(phone_battery)|int) <= (discharged_percent|int) }}'
     sequence:
-    - service: switch.turn_on
+    - service: light.turn_on
       data: {}
       entity_id: !input 'switch'
   default: []
