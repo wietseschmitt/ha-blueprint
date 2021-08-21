@@ -1,5 +1,5 @@
 blueprint:
-  name: Stop/start charging based on battery level when home.
+  name: Stop/start charging based on battery level
   description: Turn off the smart plug/relay after the device is charged to a given
     percent. Turn it back on when the device is discharged.
   domain: automation
