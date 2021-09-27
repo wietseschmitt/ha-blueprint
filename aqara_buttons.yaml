@@ -8,6 +8,7 @@ blueprint:
       description: Aqara Wireless Mini Switch to use
       selector:
         entity:
+          integration: Xiaomi Gateway (Aqara)
           domain: binary_sensor
     button_single_press:
       name: Single Press
