@@ -7,10 +7,9 @@ blueprint:
       name: Aqara Wireless Mini Switch
       description: Aqara Wireless Mini Switch to use
       selector:
-        device:
-          integration: zha
-          manufacturer: LUMI
-          model: lumi.remote.b1acn01
+        entity:
+          domain: binary_sensor
+          device_class: switch
     button_single_press:
       name: Single Press
       description: Action to run on single press
