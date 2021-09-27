@@ -62,5 +62,3 @@ action:
       - conditions:
           - "{{ command == 'release' }}"
         sequence: !input button_released
-
-Aqara-Blueprint
