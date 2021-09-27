@@ -9,7 +9,6 @@ blueprint:
       selector:
         entity:
           domain: binary_sensor
-          device_class: switch
     button_single_press:
       name: Single Press
       description: Action to run on single press
