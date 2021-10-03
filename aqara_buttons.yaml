@@ -44,21 +44,8 @@ trigger:
     event_data:
       entity_id: !input aqara_mini_switch
       click_type: single
-      
-action:
-  - variables:
-      command: "{{ trigger.event.data.command }}"
 
-  - choose:
-      - conditions:
-          - "{{ command == 'single' }}"
-        sequence: !input button_single_press
-      - conditions:
-          - "{{ command == 'double' }}"
-        sequence: !input button_double_press
-      - conditions:
-          - "{{ command == 'hold' }}"
-        sequence: !input button_long_press
-      - conditions:
-          - "{{ command == 'release' }}"
-        sequence: !input button_released
+action:
+  - service: light.toggle
+    target:
+      area_id: woonkamer_alle_lampen
