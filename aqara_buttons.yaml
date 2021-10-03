@@ -42,7 +42,8 @@ trigger:
   - platform: event
     event_type: xiaomi_aqara.click
     event_data:
-      device_id: !input aqara_mini_switch
+      entity_id: !input aqara_mini_switch
+      click_type: trigger.event.data.command
 
 action:
   - variables:
