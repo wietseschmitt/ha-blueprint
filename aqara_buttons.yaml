@@ -43,8 +43,8 @@ trigger:
     event_type: xiaomi_aqara.click
     event_data:
       entity_id: !input aqara_mini_switch
-      click_type: trigger.event.data.command
-
+      click_type: single
+      
 action:
   - variables:
       command: "{{ trigger.event.data.command }}"
